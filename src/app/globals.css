@@ -135,3 +135,20 @@ body {
 .custom-sidebar-link:hover .h-5 {
     color: white !important;
 }
+
+/* Remove tick marks from Select items */
+[data-radix-select-item-indicator] {
+    display: none !important;
+}
+
+/* Remove hover effects from Select items */
+[data-radix-select-item][data-highlighted] {
+    background-color: inherit !important;
+    color: inherit !important;
+}
+
+/* Remove focus styles */
+[data-radix-select-item]:focus {
+    background-color: inherit !important;
+    outline: none !important;
+}

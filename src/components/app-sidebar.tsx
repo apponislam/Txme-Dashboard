@@ -1,21 +1,10 @@
 "use client";
-import { Home, Users, MessageSquare, CreditCard, Settings, UserCog, FolderOpen, ClipboardList, LogOut } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
+import { sidebarItems } from "@/utils/menuItems";
+import { LogOut } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-const items = [
-    { title: "Overview", url: "/", icon: Home },
-    { title: "User Management", url: "/user-management", icon: Users },
-    { title: "Messenger", url: "/messenger", icon: MessageSquare },
-    { title: "Transaction", url: "/transaction", icon: CreditCard },
-    { title: "Settings", url: "/settings", icon: Settings },
-    { title: "Staff", url: "/staff", icon: UserCog },
-    { title: "Service Category", url: "/service-category", icon: FolderOpen },
-    { title: "Audit logs", url: "/audit-logs", icon: ClipboardList },
-    { title: "Terms and conditions", url: "/terms-and-conditions", icon: ClipboardList },
-];
 
 export function AppSidebar() {
     const pathname = usePathname();
@@ -36,7 +25,7 @@ export function AppSidebar() {
                     <SidebarGroup className="h-full">
                         <SidebarGroupContent className="h-full overflow-y-auto">
                             <SidebarMenu className="gap-2">
-                                {items.map((item) => {
+                                {sidebarItems.map((item) => {
                                     const isActive = pathname === item.url;
                                     return (
                                         <SidebarMenuItem key={item.title}>
