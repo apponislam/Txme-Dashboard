@@ -2,7 +2,7 @@
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,10 +16,14 @@ const otpSchema = z.object({
 
 type OtpFormInputs = z.infer<typeof otpSchema>;
 
-const OtpForm = () => {
+interface OtpFormProps {
+    email?: string;
+}
+
+const OtpForm = ({ email }: OtpFormProps) => {
     const router = useRouter();
-    const searchParams = useSearchParams();
-    const email = searchParams.get("email");
+    // const searchParams = useSearchParams();
+    // const email = searchParams.get("email");
 
     const {
         setError,

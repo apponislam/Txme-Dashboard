@@ -7,14 +7,14 @@ import { usePathname } from "next/navigation";
 
 const items = [
     { title: "Overview", url: "/", icon: Home },
-    { title: "User Management", url: "#", icon: Users },
-    { title: "Messenger", url: "#", icon: MessageSquare },
-    { title: "Transaction", url: "#", icon: CreditCard },
-    { title: "Settings", url: "#", icon: Settings },
-    { title: "Staff", url: "#", icon: UserCog },
-    { title: "Service Category", url: "#", icon: FolderOpen },
-    { title: "Audit logs", url: "#", icon: ClipboardList },
-    { title: "Terms and conditions", url: "#", icon: ClipboardList },
+    { title: "User Management", url: "/user-management", icon: Users },
+    { title: "Messenger", url: "/messenger", icon: MessageSquare },
+    { title: "Transaction", url: "/transaction", icon: CreditCard },
+    { title: "Settings", url: "/settings", icon: Settings },
+    { title: "Staff", url: "/staff", icon: UserCog },
+    { title: "Service Category", url: "/service-category", icon: FolderOpen },
+    { title: "Audit logs", url: "/audit-logs", icon: ClipboardList },
+    { title: "Terms and conditions", url: "/terms-and-conditions", icon: ClipboardList },
 ];
 
 export function AppSidebar() {
@@ -60,8 +60,8 @@ export function AppSidebar() {
                         <SidebarGroupContent>
                             <SidebarMenu>
                                 <SidebarMenuItem>
-                                    <SidebarMenuButton asChild className="w-full">
-                                        <Link href="#" className="flex items-center justify-center gap-3 px-5 py-2 w-full text-[#e53e3e]">
+                                    <SidebarMenuButton asChild className="w-full hover:text-[#e53e3e] hover:bg-white active:text-[#e53e3e] active:bg-white">
+                                        <Link href="/auth/login" className="flex items-center justify-center gap-3 px-5 py-2 w-full text-[#e53e3e]">
                                             <LogOut className="h-5 w-5 text-[#e53e3e]" />
                                             <span className="font-medium">Logout</span>
                                         </Link>
