@@ -5,7 +5,7 @@ interface VerifyOtpPageProps {
     searchParams: { [key: string]: string | undefined };
 }
 
-const VerifyOtpPage = ({ searchParams }: VerifyOtpPageProps) => {
+const VerifyOtpPage = async ({ searchParams }: VerifyOtpPageProps) => {
     const email = searchParams.email;
     return (
         <div className="min-h-screen flex">
