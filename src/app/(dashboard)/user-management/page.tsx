@@ -9,8 +9,10 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { demoUsers } from "@/test/testUser";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { UserModal } from "@/components/dashboard/user-management/UserDetails";
 
 const UserManagementPage = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedType, setSelectedType] = useState<"all" | "customer" | "provider">("all");
     const [selectedStatus, setSelectedStatus] = useState<"all" | "active" | "pending" | "suspend" | "inactive">("all");
@@ -185,9 +187,10 @@ const UserManagementPage = () => {
 
                                     {/* View Details Column */}
                                     <TableCell>
-                                        <button className="text-[#FFC000] hover:text-[#FF5A36] hover:bg-[#FF5A36]/10 h-12 w-12 flex items-center justify-center rounded-md transition-colors mx-auto">
+                                        <button onClick={() => setIsModalOpen(true)} className="text-[#FFC000] hover:text-[#FF5A36] hover:bg-[#FF5A36]/10 h-12 w-12 flex items-center justify-center rounded-md transition-colors mx-auto">
                                             <Eye className="h-6 w-6" />
                                         </button>
+                                        <UserModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
                                     </TableCell>
 
                                     {/* Status Column - Fixed width */}

@@ -1,6 +1,6 @@
-import { AverageViewsChart } from "@/components/dashboard/AverageViewChart";
-import OverviewTotalCard from "@/components/dashboard/OverviewTotalCard";
-import { TotalUserChart } from "@/components/dashboard/TotalUserChart";
+import { AverageViewsChart } from "@/components/dashboard/overview/AverageViewChart";
+import OverviewTotalCard from "@/components/dashboard/overview/OverviewTotalCard";
+import { TotalUserChart } from "@/components/dashboard/overview/TotalUserChart";
 
 const page = () => {
     return (
