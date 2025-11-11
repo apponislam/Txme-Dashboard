@@ -6,6 +6,7 @@ import { z } from "zod";
 import { Mail, ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 // Validation schema
 const forgotPasswordSchema = z.object({
@@ -15,6 +16,7 @@ const forgotPasswordSchema = z.object({
 type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
 
 const ForgotPasswordForm = () => {
+    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -26,7 +28,7 @@ const ForgotPasswordForm = () => {
     const onSubmit = async (data: ForgotPasswordFormValues) => {
         console.log("Forgot password data:", data);
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        // Handle forgot password logic here
+        router.push("/auth/enter-otp");
     };
 
     return (

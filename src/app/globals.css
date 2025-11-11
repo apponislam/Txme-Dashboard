@@ -126,3 +126,12 @@ body {
         @apply bg-background text-foreground;
     }
 }
+
+.custom-sidebar-link:hover {
+    background-color: #e53e3e !important;
+    color: white !important;
+}
+
+.custom-sidebar-link:hover .h-5 {
+    color: white !important;
+}
