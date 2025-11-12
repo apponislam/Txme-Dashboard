@@ -161,7 +161,7 @@ const UserManagementPage = () => {
 
                                     {/* Type Column - Fixed width */}
                                     <TableCell>
-                                        <div className={`flex items-center justify-center rounded-full px-3 py-1 text-sm font-medium w-32 mx-auto ${user.role === "provider" ? "text-[#EAB308] bg-[#FEF9C3]" : "text-[#166534] bg-[#DCFCE7]"}`}>
+                                        <div className={`flex items-center justify-center rounded-full px-3 py-1 text-sm font-medium w-32 mx-auto ${user.role === "provider" ? "text-[#FF5A36] bg-[#FFEFEB]" : "text-[#166534] bg-[#DCFCE7]"}`}>
                                             {user.role === "provider" ? (
                                                 <>
                                                     <Image src="/dashboard/user-management/usericon2.svg" alt="provider icon" height={12} width={12} className="mr-2" />

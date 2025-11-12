@@ -169,26 +169,41 @@ const MessengerPage = () => {
                 <div className="flex-1 overflow-y-auto bg-white p-4">
                     <div className="space-y-4">
                         {messages.map((message) => (
-                            <div key={message.id} className={`flex ${message.sender === "me" ? "justify-end" : "justify-start"}`}>
-                                <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl ${message.sender === "me" ? "bg-[#FF5A36] text-white rounded-br-none" : "bg-[#F3F4F6] text-gray-900 rounded-bl-none border border-gray-200"}`}>
+                            <div key={message.id} className={`flex items-end gap-2 ${message.sender === "me" ? "justify-end" : "justify-start"}`}>
+                                {/* Receiver Avatar (Left side) */}
+                                {message.sender === "them" && (
+                                    <div className="shrink-0">
+                                        <Image src={selectedUser.avatar} alt={selectedUser.name} width={32} height={32} className="w-8 h-8 rounded-full object-cover" />
+                                    </div>
+                                )}
+
+                                {/* Message Bubble */}
+                                <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl ${message.sender === "me" ? "bg-[#FF5A36] text-white rounded-br-none" : "bg-[#F3F4F6] text-gray-900 rounded-bl-none"}`}>
                                     <p className="text-sm">{message.text}</p>
-                                    <p className={`text-xs mt-1 ${message.sender === "me" ? "text-white" : "text-gray-500"}`}>{message.time}</p>
+                                    <p className={`text-xs mt-1 ${message.sender === "me" ? "text-blue-100" : "text-gray-500"}`}>{message.time}</p>
                                 </div>
+
+                                {/* Sender Avatar (Right side) */}
+                                {message.sender === "me" && (
+                                    <div className="shrink-0">
+                                        <Image src="/dashboard/user-management/user1.png" alt="You" width={32} height={32} className="w-8 h-8 rounded-full object-cover" />
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>
                 </div>
 
                 {/* Message Input */}
-                <div className="bg-transparent border-t border-gray-200 pt-4">
+                <div className="bg-transparent pt-4">
                     <div className="flex items-center space-x-2">
                         <div className="flex-1 relative">
-                            <textarea value={newMessage} onChange={(e) => setNewMessage(e.target.value)} onKeyPress={handleKeyPress} placeholder="Type a message..." className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none" rows={1} />
+                            <textarea value={newMessage} onChange={(e) => setNewMessage(e.target.value)} onKeyPress={handleKeyPress} placeholder="Type a message..." className="w-full bg-white rounded-lg px-3 py-5 pr-12 focus:outline-none focus:ring-0 focus:border-transparent resize-none placeholder:text-[#ADAEBC] text-[#ADAEBC]" rows={1} />
                             <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center space-x-1">
                                 <button className="text-[#6B7280] hover:text-gray-600">
                                     <Paperclip className="h-5 w-5" />
                                 </button>
-                                <button onClick={handleSendMessage} disabled={!newMessage.trim()} className="text-white p-1 rounded-lg hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed" style={{ backgroundColor: "#FF5A36" }}>
+                                <button onClick={handleSendMessage} disabled={!newMessage.trim()} className="text-[#FF5A36] p-1 rounded-lg hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed ">
                                     <Send className="h-5 w-5" />
                                 </button>
                             </div>

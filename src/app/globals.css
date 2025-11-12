@@ -156,3 +156,17 @@ body {
 .rich-text-content * {
     all: revert !important;
 }
+
+/* Custom switch styling */
+.custom-switch[data-state="checked"] {
+    background-color: #ff5a36 !important;
+}
+
+.custom-switch[data-state="unchecked"] {
+    background-color: #e5e7eb !important;
+}
+
+.custom-switch thumb {
+    background-color: white !important;
+    padding: 2px;
+}

@@ -17,7 +17,7 @@ const OverviewTotalCard = () => {
             change: "+$496",
             changeType: "up",
             description: "from last month",
-            icon: "/logo.svg",
+            icon: "/dashboard/overview/icon2.svg",
         },
         {
             title: "Total users",
