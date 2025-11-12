@@ -230,6 +230,7 @@ import { ChevronDown, ChevronUp, Lock, User, CreditCard, MessageCircle, Wallet, 
 import { Switch } from "@/components/ui/switch";
 import { LucideIcon } from "lucide-react";
 import Image from "next/image";
+import ChangePasswordButtonWithModal from "@/components/dashboard/settings/ChangePasswordModal";
 
 // Define types
 interface SettingItem {
@@ -384,7 +385,7 @@ const SettingsPage = () => {
         const IconComponent = section.icon;
 
         // Different widths for different levels
-        let containerClass = "flex items-center justify-between p-6 bg-white rounded-lg border border-gray-200 ";
+        let containerClass = "flex items-center justify-between p-6 bg-white rounded-lg  shadow-[0px_1px_16px_0px_rgba(0,0,0,0.08)] ";
 
         if (level === 0) {
             containerClass += "w-full";
@@ -395,10 +396,10 @@ const SettingsPage = () => {
         }
 
         return (
-            <div key={section.id} className="mb-[23px] last:mb-0">
+            <div key={section.id} className="mb-[23px] last:mb-0 ">
                 {/* Main Section */}
                 <div className={containerClass}>
-                    <div className="flex items-start gap-4 flex-1">
+                    <div className="flex items-center gap-4 flex-1">
                         <div className={`p-2 rounded-lg ${level === 0 ? "bg-blue-100 text-blue-600" : level === 1 ? "bg-green-100 text-green-600" : "bg-purple-100 text-purple-600"}`}>
                             <IconComponent className="h-5 w-5" />
                         </div>
@@ -406,7 +407,7 @@ const SettingsPage = () => {
                             <div className="flex items-center gap-2">
                                 <h3 className="text-lg font-semibold text-gray-900">{section.title}</h3>
                                 {section.adminControlled && (
-                                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-[#FFEFEB] text-[#FF5A36]">
                                         <Lock className="h-3 w-3 mr-1" />
                                         Admin Controlled
                                     </span>
@@ -447,7 +448,8 @@ const SettingsPage = () => {
                             <p className="text-[14px]">The following preferences are managed by your administrator and may be restricted.</p>
                         </div>
                     </div>
-                    <button className="bg-transparent text-[#FF5A36] py-3 px-6 border border-[#FF5A36] rounded-xl">Change password</button>
+                    {/* <button className="bg-transparent text-[#FF5A36] py-3 px-6 border border-[#FF5A36] rounded-xl">Change password</button> */}
+                    <ChangePasswordButtonWithModal></ChangePasswordButtonWithModal>
                 </div>
             </div>
 
