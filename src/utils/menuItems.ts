@@ -1,4 +1,4 @@
-import { Home, Users, MessageSquare, CreditCard, Settings, UserCog, FolderOpen, ClipboardList } from "lucide-react";
+import { Home, Users, MessageSquare, CreditCard, Settings, UserCog, FolderOpen, ClipboardList, Handshake } from "lucide-react";
 
 export const sidebarItems = [
     { title: "Overview", url: "/", icon: Home },
@@ -9,5 +9,5 @@ export const sidebarItems = [
     { title: "Staff", url: "/staff", icon: UserCog },
     { title: "Service Category", url: "/service-category", icon: FolderOpen },
     { title: "Audit logs", url: "/audit-logs", icon: ClipboardList },
-    { title: "Terms and conditions", url: "/terms-and-conditions", icon: ClipboardList },
+    { title: "Terms and conditions", url: "/terms-and-conditions", icon: Handshake },
 ];

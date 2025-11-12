@@ -152,3 +152,7 @@ body {
     background-color: inherit !important;
     outline: none !important;
 }
+
+.rich-text-content * {
+    all: revert !important;
+}
