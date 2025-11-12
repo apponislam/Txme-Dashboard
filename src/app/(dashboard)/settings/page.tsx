@@ -1,3 +1,229 @@
+// "use client";
+// import React, { useState } from "react";
+// import { ChevronDown, ChevronUp, Lock, User, CreditCard, MessageCircle, Wallet, Plus, Minus, ArrowUpDown, Send } from "lucide-react";
+// import { Switch } from "@/components/ui/switch";
+// import { LucideIcon } from "lucide-react";
+// import Image from "next/image";
+
+// // Define types
+// interface SettingItem {
+//     id: string;
+//     icon: LucideIcon;
+//     title: string;
+//     description: string;
+//     settingKey: keyof SettingsState;
+//     adminControlled: boolean;
+//     subSections?: SettingItem[];
+// }
+
+// interface SettingsState {
+//     profilePromotion: boolean;
+//     cardPayment: boolean;
+//     sendInMessage: boolean;
+//     digitalPayments: boolean;
+//     paymentByCard: boolean;
+//     paymentByPaypal: boolean;
+//     paymentWithWallet: boolean;
+//     walletTopUp: boolean;
+//     walletWithdrawal: boolean;
+//     walletMoneyRequest: boolean;
+//     walletMoneySend: boolean;
+// }
+
+// const SettingsPage = () => {
+//     const [expandedSections, setExpandedSections] = useState<string[]>([]);
+//     const [settings, setSettings] = useState<SettingsState>({
+//         profilePromotion: false,
+//         cardPayment: false,
+//         sendInMessage: false,
+//         digitalPayments: false,
+//         paymentByCard: false,
+//         paymentByPaypal: false,
+//         paymentWithWallet: false,
+//         walletTopUp: false,
+//         walletWithdrawal: false,
+//         walletMoneyRequest: false,
+//         walletMoneySend: false,
+//     });
+
+//     const toggleSection = (section: string) => {
+//         setExpandedSections((prev) => (prev.includes(section) ? prev.filter((s) => s !== section) : [...prev, section]));
+//     };
+
+//     const handleSettingChange = (setting: keyof SettingsState, value: boolean) => {
+//         setSettings((prev) => ({
+//             ...prev,
+//             [setting]: value,
+//         }));
+//     };
+
+//     const mainSections: SettingItem[] = [
+//         {
+//             id: "profile",
+//             icon: User,
+//             title: "Profile Promotion",
+//             description: "Allow your profile to be promoted to other users and in discovery features",
+//             settingKey: "profilePromotion",
+//             adminControlled: true,
+//         },
+//         {
+//             id: "card-payment",
+//             icon: CreditCard,
+//             title: "Card payment",
+//             description: "Enable card payment for completed services",
+//             settingKey: "cardPayment",
+//             adminControlled: true,
+//         },
+//         {
+//             id: "message-payments",
+//             icon: MessageCircle,
+//             title: "Send in message",
+//             description: "Allow sending and receiving money directly through message",
+//             settingKey: "sendInMessage",
+//             adminControlled: true,
+//         },
+//         {
+//             id: "payment-methods",
+//             icon: Wallet,
+//             title: "Digital Payments for Completed Services",
+//             description: "Enable digital payment processing for all completed service transactions",
+//             settingKey: "digitalPayments",
+//             adminControlled: true,
+//             subSections: [
+//                 {
+//                     id: "card",
+//                     icon: CreditCard,
+//                     title: "Payment by Card",
+//                     description: "Accept credit and debit card payments through secure gateway",
+//                     settingKey: "paymentByCard",
+//                     adminControlled: true,
+//                 },
+//                 {
+//                     id: "paypal",
+//                     icon: CreditCard,
+//                     title: "Payment by PayPal",
+//                     description: "Process payments through PayPal integration",
+//                     settingKey: "paymentByPaypal",
+//                     adminControlled: true,
+//                 },
+//                 {
+//                     id: "wallet-payments",
+//                     icon: Wallet,
+//                     title: "Payment with Wallet",
+//                     description: "Allow payments from user wallet balance and digital wallets",
+//                     settingKey: "paymentWithWallet",
+//                     adminControlled: true,
+//                     subSections: [
+//                         {
+//                             id: "top-up",
+//                             icon: Plus,
+//                             title: "Enable Wallet Top-Up",
+//                             description: "Enable Wallet Top-Up",
+//                             settingKey: "walletTopUp",
+//                             adminControlled: true,
+//                         },
+//                         {
+//                             id: "withdrawal",
+//                             icon: Minus,
+//                             title: "Enable Wallet Withdrawal",
+//                             description: "Enable Wallet Withdrawal",
+//                             settingKey: "walletWithdrawal",
+//                             adminControlled: true,
+//                         },
+//                         {
+//                             id: "money-request",
+//                             icon: ArrowUpDown,
+//                             title: "Enable Wallet Money Request",
+//                             description: "Enable Wallet Money Request",
+//                             settingKey: "walletMoneyRequest",
+//                             adminControlled: true,
+//                         },
+//                         {
+//                             id: "money-send",
+//                             icon: Send,
+//                             title: "Enable Wallet Money Send",
+//                             description: "Enable Wallet Money Send",
+//                             settingKey: "walletMoneySend",
+//                             adminControlled: true,
+//                         },
+//                     ],
+//                 },
+//             ],
+//         },
+//     ];
+
+//     const renderSection = (section: SettingItem, level = 0) => {
+//         const isExpanded = expandedSections.includes(section.id);
+//         const hasSubSections = section.subSections && section.subSections.length > 0;
+//         const IconComponent = section.icon;
+
+//         return (
+//             <div key={section.id} className="mb-[23px] last:mb-0">
+//                 {/* Main Section */}
+//                 <div className={`flex items-center justify-between p-6 bg-white rounded-lg border border-gray-200 ${level > 0 ? "ml-8 w-[calc(100%-2rem)]" : ""}`}>
+//                     <div className="flex items-start gap-4 flex-1">
+//                         <div className={`p-2 rounded-lg ${level === 0 ? "bg-blue-100 text-blue-600" : level === 1 ? "bg-green-100 text-green-600" : "bg-purple-100 text-purple-600"}`}>
+//                             <IconComponent className="h-5 w-5" />
+//                         </div>
+//                         <div className="flex-1">
+//                             <div className="flex items-center gap-2">
+//                                 <h3 className="text-lg font-semibold text-gray-900">{section.title}</h3>
+//                                 {section.adminControlled && (
+//                                     <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+//                                         <Lock className="h-3 w-3 mr-1" />
+//                                         Admin Controlled
+//                                     </span>
+//                                 )}
+//                             </div>
+//                             <p className="text-sm text-gray-600 mt-1">{section.description}</p>
+//                         </div>
+//                     </div>
+
+//                     <div className="flex items-center gap-4">
+//                         {/* Always show switch for every section */}
+//                         <div className="flex items-center gap-2">
+//                             <Switch checked={settings[section.settingKey]} onCheckedChange={(checked) => handleSettingChange(section.settingKey, checked)} className="data-[state=checked]:bg-[#FF5A36]" />
+//                         </div>
+
+//                         {/* Show chevron if has subsections */}
+//                         {hasSubSections && (
+//                             <button onClick={() => toggleSection(section.id)} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+//                                 {isExpanded ? <ChevronUp className="h-5 w-5 text-gray-500" /> : <ChevronDown className="h-5 w-5 text-gray-500" />}
+//                             </button>
+//                         )}
+//                     </div>
+//                 </div>
+
+//                 {/* Sub Sections */}
+//                 {hasSubSections && isExpanded && section.subSections && <div className="mt-[23px]">{section.subSections.map((subSection) => renderSection(subSection, level + 1))}</div>}
+//             </div>
+//         );
+//     };
+
+//     return (
+//         <div>
+//             {/* Header */}
+//             <div className="">
+//                 <div className="flex items-center justify-between gap-6">
+//                     <div className="bg-[#FFEFEB] p-4 text-[#FF5A36] flex-1 rounded-xl flex items-center gap-3">
+//                         <Image src="/dashboard/settings/infoicon.svg" alt="Info Icon" height={16} width={16} className="h-4 w-4"></Image>
+//                         <div>
+//                             <h2 className="font-medium ">Admin Controlled Settings</h2>
+//                             <p className="text-[14px]">The following preferences are managed by your administrator and may be restricted.</p>
+//                         </div>
+//                     </div>
+//                     <button className="bg-transparent text-[#FF5A36] py-3 px-6 border border-[#FF5A36] rounded-xl">Change password</button>
+//                 </div>
+//             </div>
+
+//             {/* Settings List */}
+//             <div className="p-6">{mainSections.map((section) => renderSection(section))}</div>
+//         </div>
+//     );
+// };
+
+// export default SettingsPage;
+
 "use client";
 import React, { useState } from "react";
 import { ChevronDown, ChevronUp, Lock, User, CreditCard, MessageCircle, Wallet, Plus, Minus, ArrowUpDown, Send } from "lucide-react";
@@ -157,10 +383,21 @@ const SettingsPage = () => {
         const hasSubSections = section.subSections && section.subSections.length > 0;
         const IconComponent = section.icon;
 
+        // Different widths for different levels
+        let containerClass = "flex items-center justify-between p-6 bg-white rounded-lg border border-gray-200 ";
+
+        if (level === 0) {
+            containerClass += "w-full";
+        } else if (level === 1) {
+            containerClass += "mx-auto w-11/12";
+        } else if (level >= 2) {
+            containerClass += "mx-auto w-10/12";
+        }
+
         return (
             <div key={section.id} className="mb-[23px] last:mb-0">
                 {/* Main Section */}
-                <div className={`flex items-center justify-between p-6 bg-white rounded-lg border border-gray-200 ${level > 0 ? "ml-8 w-[calc(100%-2rem)]" : ""}`}>
+                <div className={containerClass}>
                     <div className="flex items-start gap-4 flex-1">
                         <div className={`p-2 rounded-lg ${level === 0 ? "bg-blue-100 text-blue-600" : level === 1 ? "bg-green-100 text-green-600" : "bg-purple-100 text-purple-600"}`}>
                             <IconComponent className="h-5 w-5" />
@@ -180,17 +417,15 @@ const SettingsPage = () => {
                     </div>
 
                     <div className="flex items-center gap-4">
-                        {/* Always show switch for every section */}
-                        <div className="flex items-center gap-2">
-                            <Switch checked={settings[section.settingKey]} onCheckedChange={(checked) => handleSettingChange(section.settingKey, checked)} className="data-[state=checked]:bg-[#FF5A36]" />
-                        </div>
-
                         {/* Show chevron if has subsections */}
                         {hasSubSections && (
                             <button onClick={() => toggleSection(section.id)} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
                                 {isExpanded ? <ChevronUp className="h-5 w-5 text-gray-500" /> : <ChevronDown className="h-5 w-5 text-gray-500" />}
                             </button>
                         )}
+                        <div className="flex items-center gap-2 p-1">
+                            <Switch checked={settings[section.settingKey]} onCheckedChange={(checked) => handleSettingChange(section.settingKey, checked)} className="data-[state=checked]:bg-[#FF5A36] h-6 w-11 [&_span]:size-4 [&_span]:data-[state=checked]:translate-x-5 [&_span]:data-[state=unchecked]:translate-x-1" />
+                        </div>
                     </div>
                 </div>
 
@@ -203,12 +438,12 @@ const SettingsPage = () => {
     return (
         <div>
             {/* Header */}
-            <div className="">
+            <div className="mb-6">
                 <div className="flex items-center justify-between gap-6">
                     <div className="bg-[#FFEFEB] p-4 text-[#FF5A36] flex-1 rounded-xl flex items-center gap-3">
-                        <Image src="/dashboard/settings/infoicon.svg" alt="Info Icon" height={16} width={16} className="h-4 w-4"></Image>
+                        <Image src="/dashboard/settings/infoicon.svg" alt="Info Icon" height={16} width={16} className="h-4 w-4" />
                         <div>
-                            <h2 className="font-medium ">Admin Controlled Settings</h2>
+                            <h2 className="font-medium">Admin Controlled Settings</h2>
                             <p className="text-[14px]">The following preferences are managed by your administrator and may be restricted.</p>
                         </div>
                     </div>
@@ -217,7 +452,7 @@ const SettingsPage = () => {
             </div>
 
             {/* Settings List */}
-            <div className="p-6">{mainSections.map((section) => renderSection(section))}</div>
+            <div>{mainSections.map((section) => renderSection(section))}</div>
         </div>
     );
 };
