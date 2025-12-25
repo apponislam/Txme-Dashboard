@@ -1,55 +1,10 @@
-// import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-// interface AuthState {
-//     user: {
-//         id: string;
-//         role: string;
-//         name: string;
-//         email: string;
-//         image: string;
-//     } | null;
-//     accessToken: string | null;
-// }
-
-// const initialState: AuthState = {
-//     user: null,
-//     accessToken: null,
-// };
-
-// const authSlice = createSlice({
-//     name: "auth",
-//     initialState,
-//     reducers: {
-//         setAuth: (
-//             state,
-//             action: PayloadAction<{
-//                 user: AuthState["user"];
-//                 accessToken: string;
-//             }>
-//         ) => {
-//             state.user = action.payload.user;
-//             state.accessToken = action.payload.accessToken;
-//         },
-//         setAccessToken: (state, action: PayloadAction<string>) => {
-//             state.accessToken = action.payload;
-//         },
-//         logout: (state) => {
-//             state.user = null;
-//             state.accessToken = null;
-//         },
-//     },
-// });
-
-// export const { setAuth, setAccessToken, logout } = authSlice.actions;
-// export default authSlice.reducer;
-
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 
 export const roles = {
-    ADMIN: "admin" as const,
-    USER: "business" as const,
-};
+    ADMIN: "ADMIN",
+    SUPER_ADMIN: "SUPER_ADMIN",
+} as const;
 
 export type Role = (typeof roles)[keyof typeof roles];
 
@@ -58,7 +13,7 @@ export type TUser = {
     name: string;
     email: string;
     role: Role;
-    image: string;
+    image?: string;
 };
 
 type AuthState = {
@@ -85,9 +40,11 @@ const authSlice = createSlice({
             state.user = action.payload.user;
             state.accessToken = action.payload.accessToken;
         },
+
         setAccessToken: (state, action: PayloadAction<string>) => {
             state.accessToken = action.payload;
         },
+
         logout: (state) => {
             state.user = null;
             state.accessToken = null;
@@ -98,5 +55,8 @@ const authSlice = createSlice({
 export const { setUser, setAccessToken, logout } = authSlice.actions;
 export default authSlice.reducer;
 
+/**
+ * Selectors
+ */
 export const selectCurrentUser = (state: RootState) => state.auth.user;
 export const selectAccessToken = (state: RootState) => state.auth.accessToken;

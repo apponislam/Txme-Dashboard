@@ -7,9 +7,9 @@ import { Toaster } from "sonner";
 export function ReduxProvider({ children }: { children: React.ReactNode }) {
     return (
         <Provider store={store}>
+            <Toaster />
             <PersistGate loading={null} persistor={persistor}>
                 {children}
-                <Toaster />
             </PersistGate>
         </Provider>
     );

@@ -1,13 +1,91 @@
+// "use client";
+// import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
+// import { sidebarItems } from "@/utils/menuItems";
+// import { LogOut } from "lucide-react";
+// import Image from "next/image";
+// import Link from "next/link";
+// import { usePathname } from "next/navigation";
+
+// export function AppSidebar() {
+//     const pathname = usePathname();
+
+//     return (
+//         <Sidebar className="border-r border-[#E2E8F0] shadow-[0px_1px_16px_0px_rgba(0,0,0,0.08)] h-screen bg-[#FFFFFF]">
+//             <SidebarContent className="flex flex-col h-full bg-[#FFFFFF]">
+//                 {/* Header */}
+//                 <div className="shrink-0 border-b border-[#E2E8F0]">
+//                     <div className="flex items-center gap-3 p-5">
+//                         <Image src="/logo.svg" alt="Logo" height={40} width={40} />
+//                         <p className="font-semibold text-[#1E293B] text-lg">Txme</p>
+//                     </div>
+//                 </div>
+
+//                 {/* Navigation */}
+//                 <div className="flex-1 overflow-hidden">
+//                     <SidebarGroup className="h-full">
+//                         <SidebarGroupContent className="h-full overflow-y-auto">
+//                             <SidebarMenu className="gap-2">
+//                                 {sidebarItems.map((item) => {
+//                                     const isActive = pathname === item.url;
+//                                     return (
+//                                         <SidebarMenuItem key={item.title}>
+//                                             <SidebarMenuButton asChild className="w-full">
+//                                                 <Link href={item.url} className={`custom-sidebar-link flex items-center gap-3 px-5 py-2 w-full text-left h-auto transition-all duration-200 text-[#334155] ${isActive ? "bg-[#e53e3e] text-white" : ""}`}>
+//                                                     <item.icon className={`h-5 w-5 transition-colors duration-200 ${isActive ? "text-white" : "text-[#64748B]"}`} />
+//                                                     <span className="font-medium">{item.title}</span>
+//                                                 </Link>
+//                                             </SidebarMenuButton>
+//                                         </SidebarMenuItem>
+//                                     );
+//                                 })}
+//                             </SidebarMenu>
+//                         </SidebarGroupContent>
+//                     </SidebarGroup>
+//                 </div>
+
+//                 {/* Logout at the bottom */}
+//                 <div className="shrink-0 mt-auto">
+//                     <SidebarGroup>
+//                         <SidebarGroupContent>
+//                             <SidebarMenu>
+//                                 <SidebarMenuItem>
+//                                     <SidebarMenuButton asChild className="w-full hover:text-[#e53e3e] hover:bg-white active:text-[#e53e3e] active:bg-white">
+//                                         <Link href="/auth/login" className="flex items-center justify-center gap-3 px-5 py-2 w-full text-[#e53e3e]">
+//                                             <LogOut className="h-5 w-5 text-[#e53e3e]" />
+//                                             <span className="font-medium">Logout</span>
+//                                         </Link>
+//                                     </SidebarMenuButton>
+//                                 </SidebarMenuItem>
+//                             </SidebarMenu>
+//                         </SidebarGroupContent>
+//                     </SidebarGroup>
+//                 </div>
+//             </SidebarContent>
+//         </Sidebar>
+//     );
+// }
+
 "use client";
+
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
-import { sidebarItems } from "@/utils/menuItems";
+import { menuItems, MenuItem } from "@/utils/menuItems";
 import { LogOut } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { logout, selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
 
 export function AppSidebar() {
     const pathname = usePathname();
+    const user = useAppSelector(selectCurrentUser);
+    const dispatch = useAppDispatch();
+
+    const handleLogout = () => {
+        dispatch(logout());
+    };
+
+    const itemsToRender: MenuItem[] = user?.role ? menuItems[user.role] || [] : [];
 
     return (
         <Sidebar className="border-r border-[#E2E8F0] shadow-[0px_1px_16px_0px_rgba(0,0,0,0.08)] h-screen bg-[#FFFFFF]">
@@ -25,12 +103,12 @@ export function AppSidebar() {
                     <SidebarGroup className="h-full">
                         <SidebarGroupContent className="h-full overflow-y-auto">
                             <SidebarMenu className="gap-2">
-                                {sidebarItems.map((item) => {
+                                {itemsToRender.map((item) => {
                                     const isActive = pathname === item.url;
                                     return (
                                         <SidebarMenuItem key={item.title}>
                                             <SidebarMenuButton asChild className="w-full">
-                                                <Link href={item.url} className={`custom-sidebar-link flex items-center gap-3 px-5 py-2 w-full text-left h-auto transition-all duration-200 text-[#334155] ${isActive ? "bg-[#e53e3e] text-white" : ""}`}>
+                                                <Link href={item.url} className={`custom-sidebar-link flex items-center gap-3 px-5 py-2 w-full text-left h-auto transition-all duration-200 ${isActive ? "bg-[#e53e3e] text-white" : "text-[#334155]"}`}>
                                                     <item.icon className={`h-5 w-5 transition-colors duration-200 ${isActive ? "text-white" : "text-[#64748B]"}`} />
                                                     <span className="font-medium">{item.title}</span>
                                                 </Link>
@@ -49,11 +127,11 @@ export function AppSidebar() {
                         <SidebarGroupContent>
                             <SidebarMenu>
                                 <SidebarMenuItem>
-                                    <SidebarMenuButton asChild className="w-full hover:text-[#e53e3e] hover:bg-white active:text-[#e53e3e] active:bg-white">
-                                        <Link href="/auth/login" className="flex items-center justify-center gap-3 px-5 py-2 w-full text-[#e53e3e]">
+                                    <SidebarMenuButton onClick={handleLogout} asChild className="w-full hover:text-[#e53e3e] hover:bg-white active:text-[#e53e3e] active:bg-white">
+                                        <div className="flex items-center justify-center gap-3 px-5 py-2 w-full text-[#e53e3e] cursor-pointer">
                                             <LogOut className="h-5 w-5 text-[#e53e3e]" />
                                             <span className="font-medium">Logout</span>
-                                        </Link>
+                                        </div>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             </SidebarMenu>

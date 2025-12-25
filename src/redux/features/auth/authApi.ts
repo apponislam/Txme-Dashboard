@@ -1,69 +1,81 @@
-// import { removeUser } from "../../slice/userSlice";
-// import { baseApi } from "../../api/baseApi";
-
-// const authApi = baseApi.injectEndpoints({
-//     endpoints: (builder) => ({
-//         // create user
-//         signUpUser: builder.mutation({
-//             query: (data) => ({
-//                 url: `/auth/signup`,
-//                 method: "POST",
-//                 body: data,
-//             }),
-//             invalidatesTags: ["Auth"],
-//         }),
-
-//         // login user
-//         loginUser: builder.mutation({
-//             query: (data) => ({
-//                 url: "/auth/login",
-//                 method: "POST",
-//                 body: data,
-//             }),
-//             invalidatesTags: ["Auth"],
-//         }),
-//     }),
-// });
-
-// export const { useSignUpUserMutation, useLoginUserMutation } = authApi;
-
 import { baseApi } from "@/redux/api/baseApi";
 
 export const authApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         login: builder.mutation({
-            query: (credentials: { email: string; password: string }) => ({
-                url: "/auth/login",
+            query: (body: { email: string; password: string }) => ({
+                url: "/admin/login",
                 method: "POST",
-                body: credentials,
+                body,
                 credentials: "include",
             }),
         }),
+
         signup: builder.mutation({
-            query: (userData: { email: string; password: string; firstName: string; lastName: string; role: string }) => ({
-                url: "/auth/signup",
+            query: (body: { email: string; password: string; firstName: string; lastName: string; role: string }) => ({
+                url: "/admin/signup",
                 method: "POST",
-                body: userData,
+                body,
             }),
         }),
-        verifyAccount: builder.mutation({
-            query: (data: { email: string; oneTimeCode: string }) => ({
-                url: "/auth/verify-account",
+
+        forgetPassword: builder.mutation({
+            query: (body: { email: string }) => ({
+                url: "/admin/forget-password",
                 method: "POST",
-                body: data,
+                body,
             }),
         }),
-        resendOtp: builder.mutation({
-            query: (data: { email: string; authType: string }) => ({
-                url: "/auth/resend-otp",
+
+        verifyOtp: builder.mutation({
+            query: (body: { email: string; oneTimeCode: number }) => ({
+                url: "/admin/verify-otp",
                 method: "POST",
-                body: data,
+                body,
             }),
         }),
+
+        resetPassword: builder.mutation({
+            query: ({ body, token }: { body: { newPassword: string; confirmPassword: string }; token: string }) => ({
+                url: "/admin/reset-password",
+                method: "POST",
+                body,
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            }),
+        }),
+
+        changePassword: builder.mutation({
+            query: ({
+                body,
+                token,
+            }: {
+                body: {
+                    currentPassword: string;
+                    newPassword: string;
+                    confirmPassword: string;
+                };
+                token: string;
+            }) => ({
+                url: "/admin/change-password",
+                method: "POST",
+                body,
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: token,
+                },
+            }),
+        }),
+
         getProfile: builder.query({
-            query: () => "/profile",
+            query: () => ({
+                url: "/profile",
+                method: "GET",
+            }),
         }),
     }),
 });
 
-export const { useLoginMutation, useSignupMutation, useVerifyAccountMutation, useResendOtpMutation, useGetProfileQuery } = authApi;
+export const { useLoginMutation, useSignupMutation, useForgetPasswordMutation, useVerifyOtpMutation, useResetPasswordMutation, useChangePasswordMutation, useGetProfileQuery } = authApi;
