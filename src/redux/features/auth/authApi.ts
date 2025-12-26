@@ -48,23 +48,12 @@ export const authApi = baseApi.injectEndpoints({
         }),
 
         changePassword: builder.mutation({
-            query: ({
-                body,
-                token,
-            }: {
-                body: {
-                    currentPassword: string;
-                    newPassword: string;
-                    confirmPassword: string;
-                };
-                token: string;
-            }) => ({
+            query: (body) => ({
                 url: "/admin/change-password",
                 method: "POST",
                 body,
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: token,
                 },
             }),
         }),

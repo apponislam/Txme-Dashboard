@@ -1,13 +1,9 @@
 import OtpForm from "@/components/forms/auth/Otp_Form";
 import Image from "next/image";
 
-interface VerifyOtpPageProps {
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}
-
-const VerifyOtpPage = async ({ searchParams }: VerifyOtpPageProps) => {
-    const params = await searchParams;
-    const email = Array.isArray(params.email) ? params.email[0] : params.email;
+const VerifyOtpPage = async () => {
+    // const params = await searchParams;
+    // const email = Array.isArray(params.email) ? params.email[0] : params.email;
     return (
         <div className="min-h-screen flex">
             <div className="hidden lg:flex lg:flex-1 bg-gray-50 relative">
@@ -15,7 +11,7 @@ const VerifyOtpPage = async ({ searchParams }: VerifyOtpPageProps) => {
             </div>
             <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full">
-                    <OtpForm email={email} />
+                    <OtpForm />
                 </div>
             </div>
         </div>

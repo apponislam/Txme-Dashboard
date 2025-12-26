@@ -4,6 +4,7 @@
 // import { Switch } from "@/components/ui/switch";
 // import { LucideIcon } from "lucide-react";
 // import Image from "next/image";
+// import ChangePasswordButtonWithModal from "@/components/dashboard/settings/ChangePasswordModal";
 
 // // Define types
 // interface SettingItem {
@@ -157,11 +158,22 @@
 //         const hasSubSections = section.subSections && section.subSections.length > 0;
 //         const IconComponent = section.icon;
 
+//         // Different widths for different levels
+//         let containerClass = "flex items-center justify-between p-6 bg-white rounded-lg  shadow-[0px_1px_16px_0px_rgba(0,0,0,0.08)] ";
+
+//         if (level === 0) {
+//             containerClass += "w-full";
+//         } else if (level === 1) {
+//             containerClass += "mx-auto w-11/12";
+//         } else if (level >= 2) {
+//             containerClass += "mx-auto w-10/12";
+//         }
+
 //         return (
-//             <div key={section.id} className="mb-[23px] last:mb-0">
+//             <div key={section.id} className="mb-[23px] last:mb-0 ">
 //                 {/* Main Section */}
-//                 <div className={`flex items-center justify-between p-6 bg-white rounded-lg border border-gray-200 ${level > 0 ? "ml-8 w-[calc(100%-2rem)]" : ""}`}>
-//                     <div className="flex items-start gap-4 flex-1">
+//                 <div className={containerClass}>
+//                     <div className="flex items-center gap-4 flex-1">
 //                         <div className={`p-2 rounded-lg ${level === 0 ? "bg-blue-100 text-blue-600" : level === 1 ? "bg-green-100 text-green-600" : "bg-purple-100 text-purple-600"}`}>
 //                             <IconComponent className="h-5 w-5" />
 //                         </div>
@@ -169,7 +181,7 @@
 //                             <div className="flex items-center gap-2">
 //                                 <h3 className="text-lg font-semibold text-gray-900">{section.title}</h3>
 //                                 {section.adminControlled && (
-//                                     <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+//                                     <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-[#FFEFEB] text-[#FF5A36]">
 //                                         <Lock className="h-3 w-3 mr-1" />
 //                                         Admin Controlled
 //                                     </span>
@@ -180,17 +192,15 @@
 //                     </div>
 
 //                     <div className="flex items-center gap-4">
-//                         {/* Always show switch for every section */}
-//                         <div className="flex items-center gap-2">
-//                             <Switch checked={settings[section.settingKey]} onCheckedChange={(checked) => handleSettingChange(section.settingKey, checked)} className="data-[state=checked]:bg-[#FF5A36]" />
-//                         </div>
-
 //                         {/* Show chevron if has subsections */}
 //                         {hasSubSections && (
 //                             <button onClick={() => toggleSection(section.id)} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
 //                                 {isExpanded ? <ChevronUp className="h-5 w-5 text-gray-500" /> : <ChevronDown className="h-5 w-5 text-gray-500" />}
 //                             </button>
 //                         )}
+//                         <div className="flex items-center gap-2 p-1">
+//                             <Switch checked={settings[section.settingKey]} onCheckedChange={(checked) => handleSettingChange(section.settingKey, checked)} className="data-[state=checked]:bg-[#FF5A36] h-6 w-11 [&_span]:size-4 [&_span]:data-[state=checked]:translate-x-5 [&_span]:data-[state=unchecked]:translate-x-1" />
+//                         </div>
 //                     </div>
 //                 </div>
 
@@ -203,21 +213,21 @@
 //     return (
 //         <div>
 //             {/* Header */}
-//             <div className="">
+//             <div className="mb-6">
 //                 <div className="flex items-center justify-between gap-6">
 //                     <div className="bg-[#FFEFEB] p-4 text-[#FF5A36] flex-1 rounded-xl flex items-center gap-3">
-//                         <Image src="/dashboard/settings/infoicon.svg" alt="Info Icon" height={16} width={16} className="h-4 w-4"></Image>
+//                         <Image src="/dashboard/settings/infoicon.svg" alt="Info Icon" height={16} width={16} className="h-4 w-4" />
 //                         <div>
-//                             <h2 className="font-medium ">Admin Controlled Settings</h2>
+//                             <h2 className="font-medium">Admin Controlled Settings</h2>
 //                             <p className="text-[14px]">The following preferences are managed by your administrator and may be restricted.</p>
 //                         </div>
 //                     </div>
-//                     <button className="bg-transparent text-[#FF5A36] py-3 px-6 border border-[#FF5A36] rounded-xl">Change password</button>
+//                     <ChangePasswordButtonWithModal></ChangePasswordButtonWithModal>
 //                 </div>
 //             </div>
 
 //             {/* Settings List */}
-//             <div className="p-6">{mainSections.map((section) => renderSection(section))}</div>
+//             <div>{mainSections.map((section) => renderSection(section))}</div>
 //         </div>
 //     );
 // };
@@ -225,63 +235,110 @@
 // export default SettingsPage;
 
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ChevronDown, ChevronUp, Lock, User, CreditCard, MessageCircle, Wallet, Plus, Minus, ArrowUpDown, Send } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { LucideIcon } from "lucide-react";
 import Image from "next/image";
 import ChangePasswordButtonWithModal from "@/components/dashboard/settings/ChangePasswordModal";
+// import { useGetSettingsQuery, useUpdateSettingsMutation } from "@/redux/api/settingApi";
+import { toast } from "sonner";
+import { useGetSettingsQuery, useUpdateSettingsMutation } from "@/redux/features/settings/settingsApi";
 
-// Define types
 interface SettingItem {
     id: string;
     icon: LucideIcon;
     title: string;
     description: string;
-    settingKey: keyof SettingsState;
+    settingKey: string;
     adminControlled: boolean;
     subSections?: SettingItem[];
 }
 
-interface SettingsState {
-    profilePromotion: boolean;
-    cardPayment: boolean;
-    sendInMessage: boolean;
-    digitalPayments: boolean;
-    paymentByCard: boolean;
-    paymentByPaypal: boolean;
-    paymentWithWallet: boolean;
-    walletTopUp: boolean;
-    walletWithdrawal: boolean;
-    walletMoneyRequest: boolean;
-    walletMoneySend: boolean;
-}
-
 const SettingsPage = () => {
+    const { data: settingsData, isLoading } = useGetSettingsQuery(undefined);
+    const [updateSettings] = useUpdateSettingsMutation();
     const [expandedSections, setExpandedSections] = useState<string[]>([]);
-    const [settings, setSettings] = useState<SettingsState>({
-        profilePromotion: false,
-        cardPayment: false,
-        sendInMessage: false,
-        digitalPayments: false,
-        paymentByCard: false,
-        paymentByPaypal: false,
-        paymentWithWallet: false,
-        walletTopUp: false,
-        walletWithdrawal: false,
-        walletMoneyRequest: false,
-        walletMoneySend: false,
-    });
+    const [settings, setSettings] = useState<any>({});
+
+    useEffect(() => {
+        if (settingsData) {
+            const flatSettings: any = {
+                profilePromotion: settingsData.profilePromotion.enabled,
+                cardPayment: settingsData.cardPayment.enabled,
+                sendInMessage: settingsData.sendInMessage.enabled,
+                digitalPayments: settingsData.digitalPayments.enabled,
+                paymentByCard: settingsData.digitalPayments.paymentByCard.enabled,
+                paymentByPaypal: settingsData.digitalPayments.paymentByPaypal.enabled,
+                paymentWithWallet: settingsData.digitalPayments.paymentByWallet.enabled,
+                walletTopUp: settingsData.digitalPayments.paymentByWallet.walletFeatures.topUp.enabled,
+                walletWithdrawal: settingsData.digitalPayments.paymentByWallet.walletFeatures.withdraw.enabled,
+                walletMoneyRequest: settingsData.digitalPayments.paymentByWallet.walletFeatures.moneyRequest.enabled,
+                walletMoneySend: settingsData.digitalPayments.paymentByWallet.walletFeatures.moneySend.enabled,
+            };
+            setTimeout(() => setSettings(flatSettings), 0);
+        }
+    }, [settingsData]);
 
     const toggleSection = (section: string) => {
         setExpandedSections((prev) => (prev.includes(section) ? prev.filter((s) => s !== section) : [...prev, section]));
     };
 
-    const handleSettingChange = (setting: keyof SettingsState, value: boolean) => {
-        setSettings((prev) => ({
-            ...prev,
-            [setting]: value,
-        }));
+    const handleSettingChange = async (key: string, value: boolean) => {
+        if (!settingsData) return;
+
+        setSettings((prev: any) => ({ ...prev, [key]: value }));
+
+        const body: any = JSON.parse(JSON.stringify(settingsData));
+
+        switch (key) {
+            case "profilePromotion":
+                body.profilePromotion.enabled = value;
+                break;
+
+            case "cardPayment":
+                body.cardPayment.enabled = value;
+                break;
+
+            case "sendInMessage":
+                body.sendInMessage.enabled = value;
+                break;
+
+            case "paymentByCard":
+                body.digitalPayments.paymentByCard.enabled = value;
+                break;
+
+            case "paymentByPaypal":
+                body.digitalPayments.paymentByPaypal.enabled = value;
+                break;
+
+            case "paymentWithWallet":
+                body.digitalPayments.paymentByWallet.enabled = value;
+                break;
+
+            case "walletTopUp":
+                body.digitalPayments.paymentByWallet.walletFeatures.topUp.enabled = value;
+                break;
+
+            case "walletWithdrawal":
+                body.digitalPayments.paymentByWallet.walletFeatures.withdraw.enabled = value;
+                break;
+
+            case "walletMoneyRequest":
+                body.digitalPayments.paymentByWallet.walletFeatures.moneyRequest.enabled = value;
+                break;
+
+            case "walletMoneySend":
+                body.digitalPayments.paymentByWallet.walletFeatures.moneySend.enabled = value;
+                break;
+        }
+
+        try {
+            await updateSettings(body).unwrap();
+            toast.success("Setting updated successfully!");
+        } catch (err: any) {
+            toast.error(err?.data?.message || "Failed to update setting");
+        }
     };
 
     const mainSections: SettingItem[] = [
@@ -384,20 +441,13 @@ const SettingsPage = () => {
         const hasSubSections = section.subSections && section.subSections.length > 0;
         const IconComponent = section.icon;
 
-        // Different widths for different levels
         let containerClass = "flex items-center justify-between p-6 bg-white rounded-lg  shadow-[0px_1px_16px_0px_rgba(0,0,0,0.08)] ";
-
-        if (level === 0) {
-            containerClass += "w-full";
-        } else if (level === 1) {
-            containerClass += "mx-auto w-11/12";
-        } else if (level >= 2) {
-            containerClass += "mx-auto w-10/12";
-        }
+        if (level === 0) containerClass += "w-full";
+        else if (level === 1) containerClass += "mx-auto w-11/12";
+        else containerClass += "mx-auto w-10/12";
 
         return (
             <div key={section.id} className="mb-[23px] last:mb-0 ">
-                {/* Main Section */}
                 <div className={containerClass}>
                     <div className="flex items-center gap-4 flex-1">
                         <div className={`p-2 rounded-lg ${level === 0 ? "bg-blue-100 text-blue-600" : level === 1 ? "bg-green-100 text-green-600" : "bg-purple-100 text-purple-600"}`}>
@@ -418,7 +468,6 @@ const SettingsPage = () => {
                     </div>
 
                     <div className="flex items-center gap-4">
-                        {/* Show chevron if has subsections */}
                         {hasSubSections && (
                             <button onClick={() => toggleSection(section.id)} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
                                 {isExpanded ? <ChevronUp className="h-5 w-5 text-gray-500" /> : <ChevronDown className="h-5 w-5 text-gray-500" />}
@@ -429,16 +478,15 @@ const SettingsPage = () => {
                         </div>
                     </div>
                 </div>
-
-                {/* Sub Sections */}
                 {hasSubSections && isExpanded && section.subSections && <div className="mt-[23px]">{section.subSections.map((subSection) => renderSection(subSection, level + 1))}</div>}
             </div>
         );
     };
 
+    if (isLoading) return <div>Loading...</div>;
+
     return (
         <div>
-            {/* Header */}
             <div className="mb-6">
                 <div className="flex items-center justify-between gap-6">
                     <div className="bg-[#FFEFEB] p-4 text-[#FF5A36] flex-1 rounded-xl flex items-center gap-3">
@@ -448,12 +496,10 @@ const SettingsPage = () => {
                             <p className="text-[14px]">The following preferences are managed by your administrator and may be restricted.</p>
                         </div>
                     </div>
-                    {/* <button className="bg-transparent text-[#FF5A36] py-3 px-6 border border-[#FF5A36] rounded-xl">Change password</button> */}
-                    <ChangePasswordButtonWithModal></ChangePasswordButtonWithModal>
+                    <ChangePasswordButtonWithModal />
                 </div>
             </div>
 
-            {/* Settings List */}
             <div>{mainSections.map((section) => renderSection(section))}</div>
         </div>
     );
