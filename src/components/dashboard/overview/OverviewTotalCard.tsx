@@ -93,7 +93,7 @@ const OverviewTotalCard = ({ dashboardData }: any) => {
         {
             title: "Total services",
             value: dashboardData?.totalServices?.toString() || "0",
-            change: "+0", // You might want to calculate this from API data
+            change: "+0",
             changeType: "down",
             description: "from last month",
             icon: "/dashboard/overview/icon4.svg",
