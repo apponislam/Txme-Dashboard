@@ -65,7 +65,7 @@ import { ArrowUp, ArrowDown } from "lucide-react";
 import Image from "next/image";
 
 const OverviewTotalCard = ({ dashboardData }: any) => {
-    // Use real data from API
+    // Use real data from API aaadsfa
     const cards = [
         {
             title: "Total job complete",
