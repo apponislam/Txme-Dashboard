@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
                 hostname: "cdn.example.com",
                 pathname: "/**",
             },
+            {
+                protocol: "https",
+                hostname: "fahim_hasan5000.binarybards.online",
+                pathname: "/**",
+            },
         ],
     },
 };
