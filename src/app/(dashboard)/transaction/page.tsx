@@ -53,7 +53,7 @@ const TransactionHistory = () => {
     // Fetch transactions with pagination and filtering
     const { data, isLoading, isError } = useGetTransactionsQuery({
         page: currentPage,
-        limit: 6,
+        limit: 10,
         type: filterType === "all" ? undefined : filterType,
     });
 

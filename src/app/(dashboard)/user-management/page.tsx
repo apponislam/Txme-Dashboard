@@ -667,12 +667,18 @@ const UserManagementPage = () => {
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end" className="w-48 border-[#E2E8F0] shadow-[0px_1px_16px_0px_rgba(0,0,0,0.08)]">
                                                     <div className="flex flex-col p-2 gap-3">
-                                                        {user.status !== "active" && user.status !== "suspended" && (
+                                                        {user.status !== "active" && (
                                                             <DropdownMenuItem onClick={() => handleUpdateStatus(user._id, "active")} disabled={isUpdatingStatus || isDeleting} className="flex items-center justify-center rounded-full px-4 py-2 text-[#166534] bg-[#DCFCE7] font-medium text-sm data-highlighted:bg-[#DCFCE7] cursor-pointer">
                                                                 <span className="w-2 h-2 bg-[#22C55E] rounded-full"></span>
                                                                 Active
                                                             </DropdownMenuItem>
                                                         )}
+                                                        {/* {user.status !== "active" && user.status !== "suspended" && (
+                                                            <DropdownMenuItem onClick={() => handleUpdateStatus(user._id, "active")} disabled={isUpdatingStatus || isDeleting} className="flex items-center justify-center rounded-full px-4 py-2 text-[#166534] bg-[#DCFCE7] font-medium text-sm data-highlighted:bg-[#DCFCE7] cursor-pointer">
+                                                                <span className="w-2 h-2 bg-[#22C55E] rounded-full"></span>
+                                                                Active
+                                                            </DropdownMenuItem>
+                                                        )} */}
 
                                                         <DropdownMenuItem onClick={() => handleDelete(user._id, user.fullName || user.email)} disabled={isUpdatingStatus || isDeleting} className="flex items-center justify-center rounded-full px-4 py-2 text-[#1F2937] bg-[#F3F4F6] font-medium text-sm data-highlighted:bg-[#F3F4F6] cursor-pointer">
                                                             <span className="w-2 h-2 bg-[#6B7280] rounded-full"></span>
