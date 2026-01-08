@@ -10,7 +10,15 @@ export const adminChatsApi = baseApi.injectEndpoints({
             }),
             providesTags: ["AdminChats"],
         }),
+
+        deleteAdminChat: builder.mutation({
+            query: (chatId: string) => ({
+                url: `/chat/${chatId}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["AdminChats"],
+        }),
     }),
 });
 
-export const { useGetAdminChatsQuery } = adminChatsApi;
+export const { useGetAdminChatsQuery, useDeleteAdminChatMutation } = adminChatsApi;
