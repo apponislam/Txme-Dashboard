@@ -1000,6 +1000,8 @@ const ServicesPage = () => {
                 formDataToSend.append("serviceimage", formData.image);
             }
 
+            console.log(formDataToSend);
+
             await updateService({
                 id: editingService._id,
                 formData: formDataToSend,
