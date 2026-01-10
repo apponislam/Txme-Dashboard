@@ -351,7 +351,9 @@ import { useGetUsersQuery, useUpdateUserStatusMutation, useDeleteUserMutation } 
 import Swal from "sweetalert2";
 
 const UserManagementPage = () => {
+    const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedRole, setSelectedRole] = useState<"all" | "CUSTOMER" | "PROVIDER">("all");
     const [selectedStatus, setSelectedStatus] = useState<"all" | "active" | "pending" | "suspended" | "rejected">("all");
@@ -436,6 +438,11 @@ const UserManagementPage = () => {
                 confirmButtonColor: "#FF5A36",
             });
         }
+    };
+
+    const handleViewClick = (userId: string) => {
+        setSelectedUserId(userId);
+        setIsModalOpen(true);
     };
 
     // Loading state
@@ -641,10 +648,10 @@ const UserManagementPage = () => {
 
                                     {/* View Details Column */}
                                     <TableCell>
-                                        <button onClick={() => setIsModalOpen(true)} className="text-[#FFC000] hover:text-[#FF5A36] hover:bg-[#FF5A36]/10 h-12 w-12 flex items-center justify-center rounded-md transition-colors mx-auto">
+                                        <button onClick={() => handleViewClick(user._id)} className="text-[#FFC000] hover:text-[#FF5A36] hover:bg-[#FF5A36]/10 h-12 w-12 flex items-center justify-center rounded-md transition-colors mx-auto">
                                             <Eye className="h-6 w-6" />
                                         </button>
-                                        <UserModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+                                        {/* <UserModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} /> */}
                                     </TableCell>
 
                                     {/* Status Column - Fixed width */}
@@ -703,6 +710,17 @@ const UserManagementPage = () => {
                     )}
                 </CardContent>
             </Card>
+
+            {selectedUserId && (
+                <UserModal
+                    isOpen={isModalOpen}
+                    onClose={() => {
+                        setIsModalOpen(false);
+                        setSelectedUserId(null);
+                    }}
+                    userId={selectedUserId}
+                />
+            )}
 
             {/* Pagination */}
             {pagination.total > 0 && (
