@@ -655,8 +655,8 @@ export function UserModal({ isOpen, onClose, userId }: UserModalProps) {
                     <X className="h-5 w-5" />
                 </Button>
 
-                <div className="p-6">
-                    <div className="mb-4">
+                <div className="p-4">
+                    <div className="mb-2">
                         <h2 className="text-xl font-bold text-gray-900">User Details</h2>
                     </div>
 
@@ -702,18 +702,6 @@ export function UserModal({ isOpen, onClose, userId }: UserModalProps) {
                                     </div>
                                 </div>
 
-                                {/* Verification Status */}
-                                {/* <div className="mt-4 grid grid-cols-3 gap-1">
-                                    <div className="text-center">
-                                        <div className={`text-xs ${userData.isEmailVerified ? "text-green-600" : "text-red-600"}`}>{userData.isEmailVerified ? "✓ Email" : "✗ Email"}</div>
-                                    </div>
-                                    <div className="text-center">
-                                        <div className={`text-xs ${userData.isPhoneVerified ? "text-green-600" : "text-red-600"}`}>{userData.isPhoneVerified ? "✓ Phone" : "✗ Phone"}</div>
-                                    </div>
-                                    <div className="text-center">
-                                        <div className={`text-xs ${userData.isIdentityVerified ? "text-green-600" : "text-red-600"}`}>{userData.isIdentityVerified ? "✓ ID" : "✗ ID"}</div>
-                                    </div>
-                                </div> */}
                                 <div className="mt-4 flex items-center justify-center gap-2">
                                     <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs ${userData.isEmailVerified ? "bg-green-50 text-green-700 border border-green-200" : "bg-red-50 text-red-700 border border-red-200"}`}>
                                         <div className={`w-2 h-2 rounded-full ${userData.isEmailVerified ? "bg-green-500" : "bg-red-500"}`} />
@@ -886,12 +874,12 @@ export function UserModal({ isOpen, onClose, userId }: UserModalProps) {
                                     <div className="mt-3">
                                         <p className="text-xs text-gray-500 mb-1">Services</p>
                                         <div className="flex flex-wrap gap-1">
-                                            {userData.providerProfile.serviceCategory.slice(0, 3).map((category: string, index: number) => (
+                                            {userData.providerProfile.serviceCategory.slice(0, 4).map((category: string, index: number) => (
                                                 <span key={index} className="inline-flex items-center px-2 py-1 rounded bg-blue-50 text-blue-700 text-xs">
                                                     {category}
                                                 </span>
                                             ))}
-                                            {userData.providerProfile.serviceCategory.length > 3 && <span className="text-xs text-gray-500">+{userData.providerProfile.serviceCategory.length - 3} more</span>}
+                                            {userData.providerProfile.serviceCategory.length > 4 && <span className="text-xs text-gray-500">+{userData.providerProfile.serviceCategory.length - 4} more</span>}
                                         </div>
                                     </div>
                                 )}
@@ -904,7 +892,7 @@ export function UserModal({ isOpen, onClose, userId }: UserModalProps) {
                                         <h3 className="font-semibold text-gray-900">Recent Reviews</h3>
                                         <span className="text-xs text-gray-500">{userData.review?.totalReviews || 0} total</span>
                                     </div>
-                                    <div className="h-40 overflow-y-auto pr-2">
+                                    <div className="h-28 overflow-y-auto pr-2">
                                         <div className="space-y-2">
                                             {userData.last10Reviews.slice(0, 5).map((review: any) => (
                                                 <div key={review._id} className="bg-gray-50 rounded p-2">

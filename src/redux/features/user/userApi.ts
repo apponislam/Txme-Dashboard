@@ -37,6 +37,7 @@ export const userApi = baseApi.injectEndpoints({
 
         getUserById: builder.query({
             query: (id: string) => `/user/${id}`,
+            providesTags: (result, error, id) => [{ type: "User", id }],
         }),
 
         updateUserStatus: builder.mutation({
