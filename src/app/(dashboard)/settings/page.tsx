@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { ChevronDown, ChevronUp, Lock, User, CreditCard, MessageCircle, Wallet, Plus, Minus, ArrowUpDown, Send } from "lucide-react";
+import { ChevronDown, ChevronUp, Lock, User, CreditCard, Wallet, Plus, Minus, ArrowUpDown, Send } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { LucideIcon } from "lucide-react";
 import Image from "next/image";
