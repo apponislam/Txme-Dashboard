@@ -117,19 +117,19 @@ const SettingsPage = () => {
         {
             id: "card-payment",
             icon: CreditCard,
-            title: "Card payment",
+            title: "Online payment",
             description: "Enable card payment for completed services",
             settingKey: "cardPayment",
             adminControlled: true,
         },
-        {
-            id: "message-payments",
-            icon: MessageCircle,
-            title: "Send in message",
-            description: "Allow sending and receiving money directly through message",
-            settingKey: "sendInMessage",
-            adminControlled: true,
-        },
+        // {
+        //     id: "message-payments",
+        //     icon: MessageCircle,
+        //     title: "Send in message",
+        //     description: "Allow sending and receiving money directly through message",
+        //     settingKey: "sendInMessage",
+        //     adminControlled: true,
+        // },
         {
             id: "payment-methods",
             icon: Wallet,
