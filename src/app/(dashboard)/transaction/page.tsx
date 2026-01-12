@@ -94,7 +94,7 @@ const TransactionHistory = () => {
 
     const getAmountDisplay = (amount: number, direction: string) => {
         const sign = direction === "credit" ? "+" : "-";
-        return `${sign}$${amount.toFixed(2)}`;
+        return `${sign}€${amount.toFixed(2)}`;
     };
 
     const getAmountColor = (direction: string) => {

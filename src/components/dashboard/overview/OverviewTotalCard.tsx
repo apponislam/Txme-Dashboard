@@ -77,7 +77,7 @@ const OverviewTotalCard = ({ dashboardData }: any) => {
         },
         {
             title: "Total transaction",
-            value: `$${dashboardData?.totalAmount?.toLocaleString() || "0"}`,
+            value: `€${dashboardData?.totalAmount?.toLocaleString() || "0"}`,
             changeType: "up",
             description: "from last month",
             icon: "/dashboard/overview/icon2.svg",

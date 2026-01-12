@@ -256,7 +256,7 @@ const PromotionPage = () => {
                                     {/* Price */}
                                     <div className="space-y-2">
                                         <Label htmlFor="price" className="text-sm font-medium text-gray-700">
-                                            Price ($)
+                                            Price (€)
                                         </Label>
                                         <Input id="price" type="number" min="0" step="0.01" value={formData.price} onChange={(e) => handleInputChange("price", parseFloat(e.target.value))} required disabled={isCreating} />
                                     </div>
@@ -329,7 +329,7 @@ const PromotionPage = () => {
                                     {/* Price */}
                                     <div className="space-y-2">
                                         <Label htmlFor="edit-price" className="text-sm font-medium text-gray-700">
-                                            Price ($)
+                                            Price (€)
                                         </Label>
                                         <Input id="edit-price" type="number" min="0" step="0.01" value={formData.price} onChange={(e) => handleInputChange("price", parseFloat(e.target.value))} required disabled={isUpdating} />
                                     </div>
@@ -387,7 +387,7 @@ const PromotionPage = () => {
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{pkg.productId}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{pkg.durationDays} days</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${pkg.price.toFixed(2)}</td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">€{pkg.price.toFixed(2)}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{formatDate(pkg.createdAt)}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <div className="flex items-center gap-2">
